@@ -14,3 +14,6 @@ class Component:
 
     def draw(self, screen: pygame.Surface, position):
         screen.blit(self.face, position)
+
+    def get_rect(self):
+        return self.width, self.height

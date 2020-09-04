@@ -24,6 +24,14 @@ class GameWindows:
         for component in self.components:
             component['component'].draw(screen, component['position'])
 
+    def analyze_click_event_on_component(self, click_position):
+        for component in self.components:
+            if component['position'][0] <= click_position[0] and component['position'][1] <= click_position[1]:
+                component_rect = component['component'].get_rect()
+                if component['position'][0] + component_rect[0] >= click_position[0] and \
+                        component['position'][1] <= click_position[1]:
+                    pass
+
     def tic(self):
         for event in pygame.event.get():
             # print(event)

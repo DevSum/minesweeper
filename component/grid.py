@@ -2,10 +2,11 @@ import pygame
 
 from component.button import Button
 from minesweeper_game.grid import GridState
+from variables import Style
 
 
 class GridComponent(Button):
-    width = height = 20
+    width = height = Style.GRID_SIDE_LENGTH
 
     def __init__(self, left: int, top: int, grid, click_callback=None):
         super().__init__(left, top, self.width, self.height, click_callback=click_callback)
@@ -25,10 +26,21 @@ class GridComponent(Button):
         elif state == GridState.ZERO:
             screen.blit(self.white_face, (self.left, self.top))
         elif state == GridState.NUMBER:
-            font_face = pygame.font.SysFont('arial', 20)
+            font_face = pygame.font.SysFont('arial', Style.GRID_SIDE_LENGTH)
             font_face.set_bold(True)
-            screen.blit(font_face.render(str(self.grid.get_number()), True, (255, 0, 0), (117, 214, 251)), (self.left+5, self.top))
+            screen.blit(font_face.render(
+                str(self.grid.get_number()),
+                True,
+                Style.COLOR_RED,
+                Style.BG_COLOR),
+                (self.left+Style.GRID_SIDE_LENGTH//4, self.top)
+            )
         elif state == GridState.BOMB:
-            pygame.draw.circle(screen, (255, 0, 0), (self.left+10, self.top+10), 10)
+            pygame.draw.circle(
+                screen,
+                Style.COLOR_RED,
+                (self.left+Style.GRID_SIDE_LENGTH//2, self.top++Style.GRID_SIDE_LENGTH//2),
+                Style.GRID_SIDE_LENGTH//2
+            )
 
 

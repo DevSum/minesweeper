@@ -2,22 +2,22 @@ import pygame
 import sys
 from event import Event, EventType
 from component.component import Component
+from variables import Style
 
 
 class GameWindows:
     def __init__(self):
-        self.bg = (0, 0, 0)
+        self.bg = Style.BG_COLOR
         self.screen: pygame.Surface | None = None
-        self.size = 800, 600
+        self.size = Style.WINDOW_SIZE
         self.components = []
 
         self.windows_init()
 
     def windows_init(self):
         pygame.init()
-        self.bg = (117, 214, 251)
         self.screen = pygame.display.set_mode(self.size)
-        pygame.display.set_caption("mine sweeper")
+        pygame.display.set_caption(Style.TITLE)
         pygame.display.set_icon(pygame.image.load("resources/icon.jpg"))
 
     def show_component(self, screen: pygame.Surface):

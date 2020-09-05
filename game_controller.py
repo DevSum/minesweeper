@@ -4,13 +4,14 @@ from event import Event, EventType
 from game_windows import GameWindows
 from minesweeper_game.game import Game
 from mine_sweeper_windows import MineSweeperWindows
+from variables import Custom
 
 
 class GameController:
     def __init__(self):
-        row_n: int = 10
-        col_n: int = 10
-        mine_count: int = 10
+        row_n: int = Custom.GRID_ROW
+        col_n: int = Custom.GRID_COL
+        mine_count: int = Custom.BOMB_COUNT
         self.game_custom = [row_n, col_n, mine_count]
 
         self.game_windows = GameWindows()

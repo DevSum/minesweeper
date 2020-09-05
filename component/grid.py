@@ -26,7 +26,8 @@ class GridComponent(Button):
             screen.blit(self.white_face, (self.left, self.top))
         elif state == GridState.NUMBER:
             font_face = pygame.font.SysFont('arial', 20)
-            screen.blit(font_face.render('1', True, (255, 0, 0), (0, 255, 255)), (self.left, self.top))
+            font_face.set_bold(True)
+            screen.blit(font_face.render(str(self.grid.get_number()), True, (255, 0, 0), (117, 214, 251)), (self.left+5, self.top))
         elif state == GridState.BOMB:
             pygame.draw.circle(screen, (255, 0, 0), (self.left+10, self.top+10), 10)
 

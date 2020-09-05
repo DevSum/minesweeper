@@ -15,10 +15,13 @@ class MineSweeperWindows:
         for i in range(game.row_n):
             for j in range(game.col_n):
                 self.components.append(GridComponent(i * 21, j * 21, game.board.get_grid(i, j), click_callback=self.open_grid(i, j)))
-        # self.components.append(Button(600, 600))
+        self.components.append(Button(600, 500, 50, 40, click_callback=self.new_game))
 
     def open_grid(self, row, col):
         return lambda: self.game.open(row, col)
 
     def flatten_components(self):
         return self.components
+
+    def new_game(self):
+        self.game.new_game()

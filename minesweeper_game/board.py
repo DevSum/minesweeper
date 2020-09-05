@@ -8,10 +8,12 @@ class Board:
         self.row_n = row_n
         self.col_n = col_n
 
-        self.board = [[Grid(i, j, False, False) for j in range(col_n)] for i in range(row_n)]
+        self.board = [[Grid(i, j) for j in range(col_n)] for i in range(row_n)]
 
     def refresh_grid(self):
-        self.board = [[Grid(i, j, False, False) for j in range(self.col_n)] for i in range(self.row_n)]
+        for row in self.board:
+            for col in row:
+                col.new()
 
     def get_grid(self, row, col):
         return self.board[row][col]

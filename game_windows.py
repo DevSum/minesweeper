@@ -29,14 +29,20 @@ class GameWindows:
             if component['position'][0] <= click_position[0] and component['position'][1] <= click_position[1]:
                 component_rect = component['component'].get_rect()
                 if component['position'][0] + component_rect[0] >= click_position[0] and \
-                        component['position'][1] <= click_position[1]:
-                    pass
+                        component['position'][1] + component_rect[1] >= click_position[1]:
+                    # TODO random component click event returned
+                    return Event(
+                        EventType.CLICK_COMPONENT,
+                        'click at component',
+                        args={'component': component['component']}
+                    )
+        return Event(EventType.CLICK_WINDOWS, 'click at ' + str(click_position))
 
     def tic(self):
         for event in pygame.event.get():
             # print(event)
             if event.type == pygame.MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0]:
-                yield Event(EventType.CLICK_WINDOWS, 'click at ' + str(event.pos))
+                yield self.analyze_click_event_on_component(event.pos)
 
             if event.type == pygame.QUIT:
                 yield Event(EventType.EXIT, 'exit')

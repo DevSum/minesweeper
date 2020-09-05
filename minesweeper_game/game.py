@@ -1,4 +1,4 @@
-from board import Board
+from minesweeper_game.board import Board
 
 
 class Game:
@@ -33,10 +33,9 @@ class Game:
             return True
 
         mine_neighbor = self.get_neighbor(row, col)
+        self.board.get_grid(row, col).set_number(mine_neighbor)
         if mine_neighbor == 0:
             self.open_neighbor(row, col)
-        else:
-            self.board.get_grid(row, col).set_number(mine_neighbor)
 
     def get_neighbor(self, row, col):
         mine_count: int = 0

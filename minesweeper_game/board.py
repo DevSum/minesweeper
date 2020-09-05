@@ -1,6 +1,6 @@
 import random
 
-from grid import Grid
+from minesweeper_game.grid import Grid
 
 
 class Board:

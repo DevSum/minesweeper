@@ -1,6 +1,6 @@
 class Grid:
     def __init__(self, row: int, col: int, mine: bool, flag: bool):
-        self.number = 0
+        self.number = -1
         self.row = row
         self.col = col
         self.mine = mine
@@ -12,7 +12,7 @@ class Grid:
     def is_mine(self):
         return self.mine
 
-    def set_number(self, number):
+    def set_number(self, number: int):
         self.number = number
 
     def get_number(self):

@@ -2,23 +2,25 @@ import sys
 
 from event import Event, EventType
 from game_windows import GameWindows
-from game import Game
+from minesweeper_game.game import Game
 from mine_sweeper_windows import MineSweeperWindows
 
 
-class Main:
+class GameController:
     def __init__(self):
-        row_n: int = 20
-        col_n: int = 20
+        row_n: int = 10
+        col_n: int = 10
         mine_count: int = 10
         self.game_custom = [row_n, col_n, mine_count]
 
         self.game_windows = GameWindows()
         self.game = Game(self.game_custom)
-        self.mine_sweeper_windows = MineSweeperWindows(self.game_custom)
+        self.game.new_game()
+
+        self.mine_sweeper_windows = MineSweeperWindows(self.game)
         self.game_windows.set_component(self.mine_sweeper_windows.flatten_components())
 
-        self.game.new_game()
+
 
     def deal_event(self, event: Event):
         if event.type == EventType.CLICK_WINDOWS:
@@ -27,6 +29,8 @@ class Main:
             sys.exit()
         elif event.type == EventType.FLIP:
             pass
+        elif event.type == EventType.CLICK_COMPONENT:
+            event.args['component'].click()
 
     def start(self):
         while True:
@@ -34,5 +38,5 @@ class Main:
                 self.deal_event(event)
 
 
-game = Main()
+game = GameController()
 game.start()

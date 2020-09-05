@@ -17,15 +17,14 @@ class GridComponent(Button):
         white = pygame.transform.smoothscale(white, (self.width, self.height))
         self.white_face = white
 
-    def draw(self, screen: pygame.Surface, position):
-        # print(self.grid.get_number())
+    def draw(self, screen: pygame.Surface):
         if self.grid.get_number() < 0:
-            screen.blit(self.black_face, position)
+            screen.blit(self.black_face, (self.left, self.top))
         elif self.grid.get_number() == 0:
-            screen.blit(self.white_face, position)
+            screen.blit(self.white_face, (self.left, self.top))
         else:
             font_face = pygame.font.SysFont('宋体', 20)
-            screen.blit(font_face.render('1', True, (255,0,0), (0,255,255)), position)
+            screen.blit(font_face.render('1', True, (255, 0, 0), (0, 255, 255)), (self.left, self.top))
 
 
 

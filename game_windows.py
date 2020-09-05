@@ -22,19 +22,20 @@ class GameWindows:
 
     def show_component(self, screen: pygame.Surface):
         for component in self.components:
-            component['component'].draw(screen, component['position'])
+            component.draw(screen)
 
     def analyze_click_event_on_component(self, click_position):
         for component in self.components:
-            if component['position'][0] <= click_position[0] and component['position'][1] <= click_position[1]:
-                component_rect = component['component'].get_rect()
-                if component['position'][0] + component_rect[0] >= click_position[0] and \
-                        component['position'][1] + component_rect[1] >= click_position[1]:
+            component_position = component.left, component.top
+            if component.left <= click_position[0] and component.top <= click_position[1]:
+                component_rect = component.get_rect()
+                if component.left + component_rect[0] >= click_position[0] and \
+                        component.top + component_rect[1] >= click_position[1]:
                     # TODO random component click event returned
                     return Event(
                         EventType.CLICK_COMPONENT,
                         'click at component',
-                        args={'component': component['component']}
+                        args=component
                     )
         return Event(EventType.CLICK_WINDOWS, 'click at ' + str(click_position))
 
@@ -52,8 +53,8 @@ class GameWindows:
         pygame.display.flip()
         yield Event(EventType.FLIP, 'screen refreshed')
 
-    def push_component(self, component: Component, position):
-        self.components.append({'component': component, 'position': position})
+    def push_component(self, component: Component):
+        self.components.append(component)
 
     def clear_component(self):
         self.components = []

@@ -20,8 +20,6 @@ class GameController:
         self.mine_sweeper_windows = MineSweeperWindows(self.game)
         self.game_windows.set_component(self.mine_sweeper_windows.flatten_components())
 
-
-
     def deal_event(self, event: Event):
         if event.type == EventType.CLICK_WINDOWS:
             print(event.msg())
@@ -30,7 +28,7 @@ class GameController:
         elif event.type == EventType.FLIP:
             pass
         elif event.type == EventType.CLICK_COMPONENT:
-            event.args['component'].click()
+            event.args.click()
 
     def start(self):
         while True:

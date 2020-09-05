@@ -1,5 +1,5 @@
 from component.grid import GridComponent
-
+from component.button import Button
 from minesweeper_game.game import Game
 
 
@@ -14,10 +14,8 @@ class MineSweeperWindows:
 
         for i in range(game.row_n):
             for j in range(game.col_n):
-                self.components.append({
-                    'component': GridComponent(i * 21, j * 21, game.board.get_grid(i, j), click_callback=self.open_grid(i, j)),
-                    'position': (i*21, j*21),
-                })
+                self.components.append(GridComponent(i * 21, j * 21, game.board.get_grid(i, j), click_callback=self.open_grid(i, j)))
+        # self.components.append(Button(600, 600))
 
     def open_grid(self, row, col):
         return lambda: self.game.open(row, col)

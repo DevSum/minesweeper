@@ -8,7 +8,7 @@ class Component:
         self.width: int = width
         self.height: int = height
 
-    def draw(self, screen: pygame.Surface, position):
+    def draw(self, screen: pygame.Surface):
         pass
 
     def get_rect(self):

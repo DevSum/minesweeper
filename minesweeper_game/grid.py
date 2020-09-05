@@ -1,8 +1,20 @@
+from enum import Enum
+
+
+class GridState(Enum):
+    CLOSED = 0,
+    NUMBER = 1,
+    BOMB = 2,
+    FLAG = 3,
+    ZERO = 4,
+
+
 class Grid:
     def __init__(self, row: int, col: int, mine: bool = False, flag: bool = False):
-        self.number = -1
+        self.number = 0
         self.row = row
         self.col = col
+        self.state = GridState.CLOSED
         self.mine = mine
         self.flag = flag
 
@@ -19,6 +31,13 @@ class Grid:
         return self.number
 
     def new(self):
-        self.number = -1
+        self.state = GridState.CLOSED
+        self.number = 0
         self.flag = False
         self.mine = False
+
+    def setState(self, state: GridState):
+        self.state = state
+
+    def getState(self):
+        return self.state

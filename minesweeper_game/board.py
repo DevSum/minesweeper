@@ -19,6 +19,7 @@ class Board:
         return self.board[row][col]
 
     def generate_mine(self, mine_count: int):
+        bomb_positions = []
         for i in range(mine_count):
             row = random.randint(0, self.row_n - 1)
             col = random.randint(0, self.col_n - 1)
@@ -27,6 +28,8 @@ class Board:
                 col = random.randint(0, self.col_n - 1)
 
             self.get_grid(row, col).set_mine(True)
+            bomb_positions.append((row, col))
+        return bomb_positions
 
     def new_game(self, mine_count: int):
         self.refresh_grid()

@@ -1,6 +1,7 @@
 import pygame
 
 from component.button import Button
+from minesweeper_game.grid import GridState
 
 
 class GridComponent(Button):
@@ -18,11 +19,12 @@ class GridComponent(Button):
         self.white_face = white
 
     def draw(self, screen: pygame.Surface):
-        if self.grid.get_number() < 0:
+        state: GridState = self.grid.getState()
+        if state == GridState.CLOSED:
             screen.blit(self.black_face, (self.left, self.top))
-        elif self.grid.get_number() == 0:
+        elif state == GridState.ZERO:
             screen.blit(self.white_face, (self.left, self.top))
-        else:
+        elif state == GridState.NUMBER:
             font_face = pygame.font.SysFont('宋体', 20)
             screen.blit(font_face.render('1', True, (255, 0, 0), (0, 255, 255)), (self.left, self.top))
 

@@ -1,4 +1,5 @@
 from minesweeper_game.board import Board
+from minesweeper_game.grid import GridState
 
 
 class Game:
@@ -9,15 +10,18 @@ class Game:
         self.gaming = False
         self.opened_grid = [[False for _ in range(self.col_n)] for _ in range(self.row_n)]
         self.board = Board(self.row_n, self.col_n)
+        self.bomb_list = []
 
     def new_game(self):
         self.board.refresh_grid()
-        self.board.generate_mine(self.mine_count)
+        self.bomb_list = self.board.generate_mine(self.mine_count)
         self.opened_grid = [[False for _ in range(self.col_n)] for _ in range(self.row_n)]
         self.gaming = True
 
     def game_over(self):
         self.gaming = False
+        for bomb in self.bomb_list:
+            self.board.get_grid(bomb[0], bomb[1]).setState(GridState.BOMB)
 
     def open(self, row: int, col: int):
         if not self.gaming:
@@ -33,9 +37,12 @@ class Game:
             return True
 
         mine_neighbor = self.get_neighbor(row, col)
-        self.board.get_grid(row, col).set_number(mine_neighbor)
         if mine_neighbor == 0:
             self.open_neighbor(row, col)
+            self.board.get_grid(row, col).setState(GridState.ZERO)
+        else:
+            self.board.get_grid(row, col).setState(GridState.NUMBER)
+            self.board.get_grid(row, col).set_number(mine_neighbor)
 
     def get_neighbor(self, row, col):
         mine_count: int = 0

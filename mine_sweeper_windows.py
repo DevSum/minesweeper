@@ -19,7 +19,8 @@ class MineSweeperWindows:
                     i * Style.GRID_SIDE_LENGTH,
                     j * Style.GRID_SIDE_LENGTH,
                     game.board.get_grid(i, j),
-                    click_callback=self.open_grid(i, j)
+                    click_callback=self.open_grid_func(i, j),
+                    right_callback=self.mark_grid_func(i, j)
                 ))
         self.components.append(Button(
             Style.NEW_GAME_POSITION[0],
@@ -29,8 +30,11 @@ class MineSweeperWindows:
             click_callback=self.new_game
         ))
 
-    def open_grid(self, row, col):
+    def open_grid_func(self, row, col):
         return lambda: self.game.open(row, col)
+
+    def mark_grid_func(self, row, col):
+        return lambda: self.game.mark(row, col)
 
     def flatten_components(self):
         return self.components

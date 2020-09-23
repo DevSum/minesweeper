@@ -30,6 +30,9 @@ class Game:
         if self.opened_grid[row][col]:
             return False
 
+        if self.board.get_grid(row, col).getState() == GridState.FLAG:
+            return False
+
         self.opened_grid[row][col] = True
 
         if self.board.get_grid(row, col).is_mine():
@@ -43,6 +46,19 @@ class Game:
         else:
             self.board.get_grid(row, col).setState(GridState.NUMBER)
             self.board.get_grid(row, col).set_number(mine_neighbor)
+
+    def mark(self, row: int, col: int):
+        if not self.gaming:
+            return False
+
+        if self.opened_grid[row][col]:
+            return False
+
+        grid = self.board.get_grid(row, col)
+        if grid.getState() == GridState.FLAG:
+            grid.setState(GridState.CLOSED)
+        elif grid.getState() == GridState.CLOSED:
+            grid.setState(GridState.FLAG)
 
     def get_neighbor(self, row, col):
         mine_count: int = 0

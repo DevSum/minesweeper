@@ -30,6 +30,8 @@ class GameController:
             pass
         elif event.type == EventType.CLICK_COMPONENT:
             event.args.click()
+        elif event.type == EventType.RIGHT_CLICK_COMPONENT:
+            event.args.right_click()
 
     def start(self):
         while True:

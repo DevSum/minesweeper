@@ -2,7 +2,7 @@ import pygame
 import sys
 from event import Event, EventType
 from component.component import Component
-from variables import Style
+from variables import Style, Resource
 
 
 class GameWindows:
@@ -18,13 +18,21 @@ class GameWindows:
         pygame.init()
         self.screen = pygame.display.set_mode(self.size)
         pygame.display.set_caption(Style.TITLE)
-        pygame.display.set_icon(pygame.image.load("resources/icon.jpg"))
+        pygame.display.set_icon(pygame.image.load(Resource.WINDOWS_ICON))
 
     def show_component(self, screen: pygame.Surface):
         for component in self.components:
             component.draw(screen)
 
-    def analyze_click_event_on_component(self, click_position):
+    def analyze_click_event_on_component(self, event: pygame.event):
+        click_position = event.pos
+        MOUSE_LEFT = False
+        MOUSE_RIGHT = False
+        if pygame.mouse.get_pressed()[0]:
+            MOUSE_LEFT = True
+        if pygame.mouse.get_pressed()[2]:
+            MOUSE_RIGHT = True
+
         for component in self.components:
             component_position = component.left, component.top
             if component.left <= click_position[0] and component.top <= click_position[1]:
@@ -32,18 +40,25 @@ class GameWindows:
                 if component.left + component_rect[0] >= click_position[0] and \
                         component.top + component_rect[1] >= click_position[1]:
                     # TODO random component click event returned
-                    return Event(
-                        EventType.CLICK_COMPONENT,
-                        'click at component',
-                        args=component
-                    )
+                    if MOUSE_LEFT:
+                        return Event(
+                            EventType.CLICK_COMPONENT,
+                            'click at component',
+                            args=component
+                        )
+                    if MOUSE_RIGHT:
+                        return Event(
+                            EventType.RIGHT_CLICK_COMPONENT,
+                            'right click at component',
+                            args=component
+                        )
         return Event(EventType.CLICK_WINDOWS, 'click at ' + str(click_position))
 
     def tic(self):
         for event in pygame.event.get():
             # print(event)
-            if event.type == pygame.MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0]:
-                yield self.analyze_click_event_on_component(event.pos)
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                yield self.analyze_click_event_on_component(event)
 
             if event.type == pygame.QUIT:
                 yield Event(EventType.EXIT, 'exit')

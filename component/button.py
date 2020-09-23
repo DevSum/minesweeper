@@ -1,5 +1,6 @@
 import pygame
 
+from variables import Resource
 from .component import Component
 
 
@@ -13,7 +14,7 @@ class Button(Component):
             return self.click(args)
 
     def draw(self, screen: pygame.Surface):
-        white = pygame.image.load("resources/white.png")
+        white = pygame.image.load(Resource.BUTTON_RESTART)
         white = pygame.transform.smoothscale(white, (self.width, self.height))
         self.face = white
         screen.blit(self.face, (self.left, self.top))

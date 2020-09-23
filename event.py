@@ -7,6 +7,7 @@ class EventType(Enum):
     EXIT = 1,
     FLIP = 2,
     CLICK_COMPONENT = 3,
+    RIGHT_CLICK_COMPONENT = 4,
 
 
 class Event:

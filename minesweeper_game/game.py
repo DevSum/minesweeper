@@ -12,11 +12,19 @@ class Game:
         self.board = Board(self.row_n, self.col_n)
         self.bomb_list = []
 
+        self.opened_grid_count = 0
+        self.flag_count = 0
+
+    def bomb_number(self):
+        return self.mine_count - self.flag_count
+
     def new_game(self):
         self.board.refresh_grid()
         self.bomb_list = self.board.generate_mine(self.mine_count)
         self.opened_grid = [[False for _ in range(self.col_n)] for _ in range(self.row_n)]
         self.gaming = True
+        self.opened_grid_count = 0
+        self.flag_count = 0
 
     def game_over(self):
         self.gaming = False
@@ -34,10 +42,14 @@ class Game:
             return False
 
         self.opened_grid[row][col] = True
+        self.opened_grid_count += 1
 
         if self.board.get_grid(row, col).is_mine():
             self.game_over()
             return True
+
+        if self.opened_grid_count == self.row_n * self.col_n - self.mine_count:
+            self.win()
 
         mine_neighbor = self.get_neighbor(row, col)
         if mine_neighbor == 0:
@@ -46,6 +58,9 @@ class Game:
         else:
             self.board.get_grid(row, col).setState(GridState.NUMBER)
             self.board.get_grid(row, col).set_number(mine_neighbor)
+
+    def win(self):
+        self.gaming = False
 
     def mark(self, row: int, col: int):
         if not self.gaming:
@@ -57,8 +72,10 @@ class Game:
         grid = self.board.get_grid(row, col)
         if grid.getState() == GridState.FLAG:
             grid.setState(GridState.CLOSED)
+            self.flag_count -= 1
         elif grid.getState() == GridState.CLOSED:
             grid.setState(GridState.FLAG)
+            self.flag_count += 1
 
     def get_neighbor(self, row, col):
         mine_count: int = 0

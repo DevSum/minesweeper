@@ -11,6 +11,9 @@ class Style:
     BUTTON_HEIGHT = 40
     NEW_GAME_POSITION = 410, 500
     NUMBER_COLOR = COLOR_RED
+    NUMBER_BOX_WIDTH = 40
+    NUMBER_BOX_HEIGHT = 40
+    BOMB_COUNT_POSITION = 310, 500
 
 
 class Resource:
@@ -25,4 +28,4 @@ class Resource:
 class Custom:
     GRID_ROW = 30
     GRID_COL = 16
-    BOMB_COUNT = 99
+    BOMB_COUNT = 1

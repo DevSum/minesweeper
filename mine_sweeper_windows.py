@@ -1,5 +1,6 @@
 from component.grid import GridComponent
 from component.button import Button
+from component.number_box import NumberBox
 from minesweeper_game.game import Game
 from variables import Style
 
@@ -29,6 +30,14 @@ class MineSweeperWindows:
             Style.BUTTON_HEIGHT,
             click_callback=self.new_game
         ))
+        self.bomb_count_component = NumberBox(
+            Style.BOMB_COUNT_POSITION[0],
+            Style.BOMB_COUNT_POSITION[1],
+            Style.NUMBER_BOX_WIDTH,
+            Style.NUMBER_BOX_HEIGHT,
+            number=lambda: self.game.bomb_number()
+        )
+        self.components.append(self.bomb_count_component)
 
     def open_grid_func(self, row, col):
         return lambda: self.game.open(row, col)

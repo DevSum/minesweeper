@@ -1,10 +1,12 @@
 import sys
 
+import pygame
+
 from event import Event, EventType
 from game_windows import GameWindows
 from minesweeper_game.game import Game
 from mine_sweeper_windows import MineSweeperWindows
-from variables import Custom
+from variables import Custom, Constant
 
 
 class GameController:
@@ -32,6 +34,8 @@ class GameController:
             event.args.click()
         elif event.type == EventType.RIGHT_CLICK_COMPONENT:
             event.args.right_click()
+        if event.type == EventType.TIMER_TIC:
+            self.game.timer.tic()
 
     def start(self):
         while True:

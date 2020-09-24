@@ -1,7 +1,7 @@
 import pygame
 
 from component.component import Component
-from variables import Style
+from variables import Constant
 
 
 class NumberBox(Component):
@@ -10,14 +10,14 @@ class NumberBox(Component):
         self.number = number
 
     def draw(self, screen: pygame.Surface):
-        font_face = pygame.font.SysFont('arial', Style.GRID_SIDE_LENGTH)
+        font_face = pygame.font.SysFont('arial', Constant.GRID_SIDE_LENGTH)
         font_face.set_bold(True)
         screen.blit(font_face.render(
             str(self.number if type(self.number) == int else self.number()),
             True,
-            Style.NUMBER_COLOR,
-            Style.BG_COLOR),
-            (self.left + Style.GRID_SIDE_LENGTH // 4, self.top)
+            Constant.NUMBER_COLOR,
+            Constant.BG_COLOR),
+            (self.left + Constant.GRID_SIDE_LENGTH // 4, self.top)
         )
 
     def setNumber(self, number: int or callable):

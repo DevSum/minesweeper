@@ -8,10 +8,11 @@ class EventType(Enum):
     FLIP = 2,
     CLICK_COMPONENT = 3,
     RIGHT_CLICK_COMPONENT = 4,
+    TIMER_TIC = 5,
 
 
 class Event:
-    def __init__(self, event: EventType, message: str, args=None):
+    def __init__(self, event: EventType, message: str = '', args=None):
         if args is None:
             args = []
         self.type = event

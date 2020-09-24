@@ -1,4 +1,7 @@
-class Style:
+import pygame
+
+
+class Constant:
     COLOR_RED = (255, 0, 0)
     COLOR_BLUE = (0, 0, 255)
     COLOR_WHITE = (255, 255, 255)
@@ -14,6 +17,8 @@ class Style:
     NUMBER_BOX_WIDTH = 40
     NUMBER_BOX_HEIGHT = 40
     BOMB_COUNT_POSITION = 310, 500
+    TIMER_POSITION = 510, 500
+    SECOND_EVENT = pygame.USEREVENT + 1
 
 
 class Resource:
@@ -28,4 +33,4 @@ class Resource:
 class Custom:
     GRID_ROW = 30
     GRID_COL = 16
-    BOMB_COUNT = 1
+    BOMB_COUNT = 10

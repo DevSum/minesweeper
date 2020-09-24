@@ -1,5 +1,9 @@
+import pygame
+
 from minesweeper_game.board import Board
 from minesweeper_game.grid import GridState
+from timer import Timer
+from variables import Constant
 
 
 class Game:
@@ -14,6 +18,7 @@ class Game:
 
         self.opened_grid_count = 0
         self.flag_count = 0
+        self.timer = Timer()
 
     def bomb_number(self):
         return self.mine_count - self.flag_count
@@ -25,9 +30,11 @@ class Game:
         self.gaming = True
         self.opened_grid_count = 0
         self.flag_count = 0
+        self.timer.reset()
 
     def game_over(self):
         self.gaming = False
+        self.timer.stop()
         for bomb in self.bomb_list:
             self.board.get_grid(bomb[0], bomb[1]).setState(GridState.BOMB)
 
@@ -41,6 +48,9 @@ class Game:
         if self.board.get_grid(row, col).getState() == GridState.FLAG:
             return False
 
+        if not self.timer.running:
+            self.timer.start()
+            pygame.time.set_timer(Constant.SECOND_EVENT, 1000)
         self.opened_grid[row][col] = True
         self.opened_grid_count += 1
 
@@ -60,6 +70,7 @@ class Game:
             self.board.get_grid(row, col).set_number(mine_neighbor)
 
     def win(self):
+        self.timer.stop()
         self.gaming = False
 
     def mark(self, row: int, col: int):

@@ -2,14 +2,14 @@ import pygame
 import sys
 from event import Event, EventType
 from component.component import Component
-from variables import Style, Resource
+from variables import Constant, Resource
 
 
 class GameWindows:
     def __init__(self):
-        self.bg = Style.BG_COLOR
+        self.bg = Constant.BG_COLOR
         self.screen: pygame.Surface | None = None
-        self.size = Style.WINDOW_SIZE
+        self.size = Constant.WINDOW_SIZE
         self.components = []
 
         self.windows_init()
@@ -17,7 +17,7 @@ class GameWindows:
     def windows_init(self):
         pygame.init()
         self.screen = pygame.display.set_mode(self.size)
-        pygame.display.set_caption(Style.TITLE)
+        pygame.display.set_caption(Constant.TITLE)
         pygame.display.set_icon(pygame.image.load(Resource.WINDOWS_ICON))
 
     def show_component(self, screen: pygame.Surface):
@@ -62,6 +62,9 @@ class GameWindows:
 
             if event.type == pygame.QUIT:
                 yield Event(EventType.EXIT, 'exit')
+
+            if event.type == Constant.SECOND_EVENT:
+                yield Event(EventType.TIMER_TIC)
 
         self.screen.fill(self.bg)
         self.show_component(self.screen)

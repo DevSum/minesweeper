@@ -18,6 +18,12 @@ class GridComponent(Button):
         white = pygame.image.load(Resource.GRID_OPENED)
         white = pygame.transform.smoothscale(white, (self.width, self.height))
         self.white_face = white
+        flag = pygame.image.load(Resource.FLAG)
+        flag = pygame.transform.smoothscale(flag, (self.width, self.height))
+        self.flag_face = flag
+        bomb = pygame.image.load(Resource.BOMB)
+        bomb = pygame.transform.smoothscale(bomb, (self.width, self.height))
+        self.bomb_face = bomb
 
         self.right_click = right_callback
 
@@ -33,24 +39,14 @@ class GridComponent(Button):
             screen.blit(font_face.render(
                 str(self.grid.get_number()),
                 True,
-                Style.COLOR_RED,
+                Style.NUMBER_COLOR,
                 Style.BG_COLOR),
                 (self.left+Style.GRID_SIDE_LENGTH//4, self.top)
             )
         elif state == GridState.BOMB:
-            pygame.draw.circle(
-                screen,
-                Style.COLOR_RED,
-                (self.left+Style.GRID_SIDE_LENGTH//2, self.top++Style.GRID_SIDE_LENGTH//2),
-                Style.GRID_SIDE_LENGTH//2
-            )
+            screen.blit(self.bomb_face, (self.left, self.top))
         elif state == GridState.FLAG:
-            pygame.draw.circle(
-                screen,
-                Style.COLOR_BLUE,
-                (self.left + Style.GRID_SIDE_LENGTH // 2, self.top + +Style.GRID_SIDE_LENGTH // 2),
-                Style.GRID_SIDE_LENGTH // 2
-            )
+            screen.blit(self.flag_face, (self.left, self.top))
 
     def right_click(self, *args):
         if self.click:
